@@ -1,47 +1,63 @@
 import { createSlice } from "@reduxjs/toolkit"
-
-function updateObject(oldObject, newValues) {
-    return Object.assign({}, oldObject, newValues)
-}
-
-function updateItemInArray(array, itemId, updateItemCallback) {
-    const updatedItems = array.map(item => {
-        if (item.id !== itemId) {
-            return item
-        }
-        const updatedItem = updateItemCallback(item)
-        return updatedItem
-    })
-    return updatedItems
-}
+import { v4 as uuid } from 'uuid'
 
 const tasksSlice = createSlice({
     name: 'todos',
     initialState: {
-        tasks: []
+        inputText: '',
+        list:[]
     },
     reducers:{
+        setText(state, action){
+            return {...state, inputText:action.payload}
+        },
         addTask(state, action){
-            const tasks = state.tasks.concat({
+            const list = state.list.concat({
+                id: uuid(),
                 text: action.payload.text,
                 completed: false
             })
-            return updateObject(state.tasks, { tasks })
+            localStorage.setItem("todoList", JSON.stringify(list))
+            return Object.assign({}, state, { list })
         },
-        toggleTask(state, action){
-            const tasks = updateItemInArray(state.tasks, action.payload.id, task => {
-                return updateObject(task, { completed: !task.completed })
+        toggleDone(state, action){
+            const tasks = JSON.parse(localStorage.getItem("todoList"))
+
+            tasks.map((task, i) => {
+                if(task.id === action.payload.id){
+                    tasks[i] = { ...task, completed:!task.completed }
+                    return
+                }
+                return
             })
-            return updateObject(state, { tasks })
+
+            console.log(tasks)
+
+            localStorage.setItem("todoList", JSON.stringify(tasks))
+            return Object.assign({}, state, { list:tasks })
         },
-        editTask(state, action){
-            const tasks = updateItemInArray(state.tasks, action.payload.id, task => {
-                return updateObject(task, { text: action.payload.text })
+        deleteTask(state, action){
+            const tasks = JSON.parse(localStorage.getItem("todoList"))
+
+            tasks.map((task, i) => {
+                if(task.id === action.payload.id){
+                    tasks.splice(i,1)
+                    return
+                }
+                return
             })
-            return updateObject(state, { tasks })
+
+            localStorage.setItem("todoList", JSON.stringify(tasks))
+            return Object.assign({}, state, { list:tasks })
+        },
+        refresh(state, action){
+            const todo = localStorage.getItem("todoList")
+            const inputText = (action.payload && action.payload.inputText) ? action.payload.inputText : ''
+            const list = (todo) ? JSON.parse(todo) : []
+            return { ...state, inputText, list }
         }
     }
 })
 
-export const { addTask, toggleTask, editTask } = tasksSlice.actions
+export const { setText, addTask, toggleDone, deleteTask, refresh } = tasksSlice.actions
 export default tasksSlice.reducer

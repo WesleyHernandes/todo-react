@@ -1,12 +1,12 @@
-import React, { useState } from "react"
+import React from "react"
 import Button from "./Button"
 import { connect } from "react-redux"
 import { bindActionCreators } from 'redux'
 
-import { addTask } from "../store/reducers/tasks"
+import { setText, addTask } from "../store/reducers/tasks"
 
 const Form = props => {
-    const [text, setText] = useState('')
+    const { text } = props
 
     return (
         <div className="Form">
@@ -14,18 +14,24 @@ const Form = props => {
                 type="text"
                 placeholder="Informe a tarefa"
                 value={text}
-                onChange={e => setText(e.target.value)}
+                onChange={e => props.setText(e.target.value)}
             />
             <Button label="+" onClick={() => props.addTask({ text })} />
         </div>
     )
 }
 
-function mapDispatchToProps(dispatch){
+function mapStateToProps(state){
     return {
-        dispatch,
-        ...bindActionCreators({ addTask }, dispatch)
+        text: state.tasks.inputText
     }
 }
 
-export default connect(null, mapDispatchToProps)(Form)
+function mapDispatchToProps(dispatch){
+    return {
+        dispatch,
+        ...bindActionCreators({ setText, addTask }, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form)

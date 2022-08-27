@@ -2,7 +2,13 @@ import './App.css';
 import Form from './components/Form';
 import Tasks from './components/Tasks';
 
-function App() {
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { refresh } from './store/reducers/tasks'
+
+const App = props => {
+  props.refresh()
+
   return (
     <div className="App">
       <Form />
@@ -11,4 +17,11 @@ function App() {
   );
 }
 
-export default App;
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ refresh }, dispatch)
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App);
