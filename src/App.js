@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { refresh } from './store/reducers/tasks'
 
 import Form from './components/Form';
+import TabButtons from './components/TabButtons';
 import Tasks from './components/Tasks';
 
 const App = props => {
@@ -14,13 +15,7 @@ const App = props => {
     <div className="App">
       <div className="AppContent">
         <Form />
-
-        <div className='TabButtonsContent'>
-          <button className="TabButton ButtonSelected">Todos</button>
-          <button className="TabButton">Pendentes</button>
-          <button className="TabButton">Concluidos</button>
-        </div>
-
+        <TabButtons />
         <Tasks />
       </div>
     </div>

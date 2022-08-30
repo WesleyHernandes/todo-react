@@ -1,0 +1,37 @@
+.TabButtonsContent{
+    @apply
+        flex
+        space-x-1
+        rounded-xl 
+        bg-blue-900/20 
+        p-1
+        mb-2
+    ;
+}
+
+.TabButton{
+    @apply
+        w-full
+        rounded-lg
+        py-2.5
+        text-sm
+        font-medium
+        leading-5 
+        ring-white 
+        ring-opacity-60 
+        ring-offset-2 
+        ring-offset-purple-400
+        text-purple-100 
+        hover:bg-white/[0.12] 
+        hover:text-white
+    ;
+}
+
+.TabButton.ButtonSelected{
+    @apply
+        ring-2
+        shadow
+        text-purple-700
+        bg-white
+    ;
+}

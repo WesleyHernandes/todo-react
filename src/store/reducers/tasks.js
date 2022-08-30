@@ -5,20 +5,28 @@ const tasksSlice = createSlice({
     name: 'todos',
     initialState: {
         inputText: '',
-        list:[]
+        list:[],
+        listFilter:"SHOW_ALL"
     },
     reducers:{
         setText(state, action){
             return {...state, inputText:action.payload}
         },
+        setListFilter(state, action){
+            return {...state, listFilter:action.payload}
+        },
         addTask(state, action){
+            if(!action.payload.text){
+                return state
+            }
+
             const list = state.list.concat({
                 id: uuid(),
                 text: action.payload.text,
                 completed: false
             })
             localStorage.setItem("todoList", JSON.stringify(list))
-            return Object.assign({}, state, { list })
+            return Object.assign({}, state, { inputText: '', list })
         },
         toggleDone(state, action){
             const tasks = JSON.parse(localStorage.getItem("todoList"))
@@ -57,5 +65,5 @@ const tasksSlice = createSlice({
     }
 })
 
-export const { setText, addTask, toggleDone, deleteTask, refresh } = tasksSlice.actions
+export const { setText, setListFilter, addTask, toggleDone, deleteTask, refresh } = tasksSlice.actions
 export default tasksSlice.reducer
