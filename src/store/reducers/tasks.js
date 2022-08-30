@@ -31,8 +31,6 @@ const tasksSlice = createSlice({
                 return
             })
 
-            console.log(tasks)
-
             localStorage.setItem("todoList", JSON.stringify(tasks))
             return Object.assign({}, state, { list:tasks })
         },

@@ -7,7 +7,7 @@ import { setText, toggleDone, deleteTask, refresh } from '../store/reducers/task
 
 function Tasks(props) {
     const _toggleDone = task => {
-        props.toggleDone(task.text)
+        props.toggleDone(task)
     }
 
     const _deleteTask = task => {
@@ -42,10 +42,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {
-        dispatch,
-        ...bindActionCreators({ setText, toggleDone, deleteTask, refresh }, dispatch)
-    }
+    return { ...bindActionCreators({ setText, toggleDone, deleteTask, refresh }, dispatch) }
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Tasks)
