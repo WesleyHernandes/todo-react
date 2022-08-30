@@ -1,8 +1,9 @@
+import './Form.css'
 import React from "react"
-import Button from "./Button"
 import { connect } from "react-redux"
 import { bindActionCreators } from 'redux'
 
+import { Plus } from '../icons'
 import { setText, addTask } from "../store/reducers/tasks"
 
 const Form = props => {
@@ -11,12 +12,18 @@ const Form = props => {
     return (
         <div className="Form">
             <input
+                className="FormInput"
                 type="text"
                 placeholder="Informe a tarefa"
                 value={text}
                 onChange={e => props.setText(e.target.value)}
             />
-            <Button label="+" onClick={() => props.addTask({ text })} />
+            <button
+                className="FormButton"
+                onClick={() => props.addTask({ text })}
+                title="Adicionar">
+                <Plus/>
+            </button>
         </div>
     )
 }

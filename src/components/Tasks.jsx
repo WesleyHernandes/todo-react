@@ -1,35 +1,51 @@
-import React, { useState } from "react"
+import "./Tasks.css"
+import React from "react"
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux"
-import Button from './Button'
 
+import { X, Check } from '../icons'
 import { setText, toggleDone, deleteTask, refresh } from '../store/reducers/tasks'
 
 function Tasks(props) {
-    const _toggleDone = task => {
+    const handleToggleDone = task => {
         props.toggleDone(task)
     }
 
-    const _deleteTask = task => {
+    const handleDeleteTask = task => {
         props.deleteTask(task)
         props.refresh()
     }
 
     const renderTasks = () => {
         const { list } = props
-        return list.map(task => (
-            <div key={task.id} className="task">
-                <p className="text">{task.text}</p>
-                <div className="options">
-                    <Button label="D" onClick={() => _toggleDone(task)} />
-                    <Button label="R" onClick={() => _deleteTask(task)} />
+        return list.map(task => {
+            const TaskClass = task.completed ? 'TaskCompleted' : ''
+
+            return(
+                <div key={task.id} className={`Task ${TaskClass}`}>
+                    <p className="TaskText">{task.text}</p>
+                    <div className="TaskOptions flex items-center gap-2">
+                        <button
+                            className="TaskButton" 
+                            onClick={() => handleToggleDone(task)}
+                            title="Editar">
+                            <Check />
+                        </button>
+
+                        <button
+                            className="TaskButton" 
+                            onClick={() => handleDeleteTask(task)}
+                            title="Remover">
+                            <X />
+                        </button>
+                    </div>
                 </div>
-            </div>
-        ))
+            )
+        })
     }
 
     return (
-        <div className="tasks">
+        <div className="Tasks">
             {renderTasks()}
         </div>
     )

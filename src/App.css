@@ -1,2 +1,63 @@
 .App {
+    @apply
+        relative
+        flex
+        flex-col
+        min-h-screen 
+        items-center 
+        justify-center 
+        overflow-hidden 
+        bg-gradient-to-r 
+        to-indigo-500 
+        from-purple-500
+    ;
+}
+
+.App .AppContent{
+    @apply
+        w-full
+        max-w-md 
+        m-auto 
+        px-2 
+        py-16 
+        sm:px-0
+    ;
+}
+
+.App .AppContent .TabButtonsContent{
+    @apply
+        flex
+        space-x-1
+        rounded-xl 
+        bg-blue-900/20 
+        p-1
+        mb-2
+    ;
+}
+
+.App .TabButton{
+    @apply
+        w-full
+        rounded-lg
+        py-2.5
+        text-sm
+        font-medium
+        leading-5 
+        ring-white 
+        ring-opacity-60 
+        ring-offset-2 
+        ring-offset-purple-400
+        text-purple-100 
+        hover:bg-white/[0.12] 
+        hover:text-white
+    ;
+}
+
+.App .TabButton.ButtonSelected{
+    @apply
+        ring-2
+        shadow
+        text-purple-700
+        bg-white
+    ;
 }
