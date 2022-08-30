@@ -42,7 +42,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return { ...bindActionCreators({ setText, toggleDone, deleteTask, refresh }, dispatch) }
+    return { ...bindActionCreators({ setText, toggleDone, deleteTask, refresh }, dispatch)}
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Tasks)

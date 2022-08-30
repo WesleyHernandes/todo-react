@@ -26,9 +26,9 @@ const tasksSlice = createSlice({
             tasks.map((task, i) => {
                 if(task.id === action.payload.id){
                     tasks[i] = { ...task, completed:!task.completed }
-                    return
+                    return task
                 }
-                return
+                return task
             })
 
             localStorage.setItem("todoList", JSON.stringify(tasks))
@@ -40,9 +40,9 @@ const tasksSlice = createSlice({
             tasks.map((task, i) => {
                 if(task.id === action.payload.id){
                     tasks.splice(i,1)
-                    return
+                    return task
                 }
-                return
+                return task
             })
 
             localStorage.setItem("todoList", JSON.stringify(tasks))
