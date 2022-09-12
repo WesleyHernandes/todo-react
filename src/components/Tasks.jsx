@@ -9,6 +9,7 @@ import { setText, toggleDone, deleteTask, refresh } from '../store/reducers/task
 function Tasks(props) {
     const handleToggleDone = task => {
         props.toggleDone(task)
+        props.refresh()
     }
 
     const handleDeleteTask = task => {
@@ -18,30 +19,39 @@ function Tasks(props) {
 
     const renderTasks = () => {
         const { list } = props
-        return list.map(task => {
-            const TaskClass = task.completed ? 'TaskCompleted' : ''
 
-            return(
-                <div key={task.id} className={`Task ${TaskClass}`}>
-                    <p className="TaskText">{task.text}</p>
-                    <div className="TaskOptions flex items-center gap-2">
-                        <button
-                            className="TaskButton" 
-                            onClick={() => handleToggleDone(task)}
-                            title="Editar">
-                            <Check />
-                        </button>
+        if(list.length > 0){
+            return list.map(task => {
+                const TaskClass = task.completed ? 'TaskCompleted' : ''
 
-                        <button
-                            className="TaskButton" 
-                            onClick={() => handleDeleteTask(task)}
-                            title="Remover">
-                            <X />
-                        </button>
+                return(
+                    <div key={task.id} className={`Task ${TaskClass}`}>
+                        <p className="TaskText">{task.text}</p>
+                        <div className="TaskOptions flex items-center gap-2">
+                            <button
+                                className="TaskButton" 
+                                onClick={() => handleToggleDone(task)}
+                                title="Editar">
+                                <Check />
+                            </button>
+
+                            <button
+                                className="TaskButton" 
+                                onClick={() => handleDeleteTask(task)}
+                                title="Remover">
+                                <X />
+                            </button>
+                        </div>
                     </div>
+                )
+            })
+        }else{
+            return (
+                <div className="Task">
+                    <p className="TaskText">Nenhuma tarefa na lista</p>
                 </div>
             )
-        })
+        }
     }
 
     return (

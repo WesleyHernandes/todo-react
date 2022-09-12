@@ -57,9 +57,19 @@ const tasksSlice = createSlice({
             return Object.assign({}, state, { list:tasks })
         },
         refresh(state, action){
-            const todo = localStorage.getItem("todoList")
+            let todo = JSON.parse(localStorage.getItem("todoList"))
+
+            switch (state.listFilter) {
+                case 'SHOW_PENDING':
+                    todo = todo.filter(item => item.completed === false)
+                    break
+                case 'SHOW_CONCLUDED':
+                    todo = todo.filter(item => item.completed === true)
+                    break
+            }
+
             const inputText = (action.payload && action.payload.inputText) ? action.payload.inputText : ''
-            const list = (todo) ? JSON.parse(todo) : []
+            const list = todo || []
             return { ...state, inputText, list }
         }
     }
