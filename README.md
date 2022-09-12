@@ -41,7 +41,7 @@ npm start
 <hr>
 
 ### 📝 License
-Project is released under the [MIT License](./LICENSE) click for more details
+Project is released under the [MIT License](./LICENSE.md) click for more details
 
 <hr>
 
